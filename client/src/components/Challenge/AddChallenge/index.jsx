@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
+import randomstring from 'randomstring';
 
 import Input from "../../globals/forms/Input";
 import Button from "../../globals/Button/";
@@ -17,13 +18,16 @@ class AddChallenge extends Component {
 
   submitChallenge = async e => {
     e.preventDefault();
-    const { title, content, difficulty, test } = this.state;
-    const id = localStorage.getItem("id");
+
+    let slingId = `${randomstring.generate()}`;
+    const { title, content, difficulty } = this.state;
+    const id = localStorage.getItem('id');
     const body = {
       title,
       content,
       difficulty,
       user_id: id,
+      url: slingId,
       type: 0
     };
     const { data } = await axios.post(
