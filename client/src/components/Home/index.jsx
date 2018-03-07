@@ -34,7 +34,7 @@ class Home extends Component {
       }
     });
   }
-  
+
   handleAddChallengeClick = () => {
     this.props.history.push('/addChallenge');
   }
@@ -46,40 +46,34 @@ class Home extends Component {
   }
 
   render() {
-    return (
-      <div className="landing-page-container">
-        <Logo
-          className="landing-page-logo"
-        />
+    return <div className="landing-page-container">
+        <Logo className="landing-page-logo" />
         <br />
-        <select onChange={(e) => this.handleChallengeSelect(e)}>
+        {JSON.stringify(this.props)}
+        <br />
+        <br />
+        {JSON.stringify(this.state)}
+        <br />
+        <br />
+        {JSON.stringify(localStorage)}
+        <br />
+        <br />
+        {JSON.stringify(this.props.history)}
+        <br />
+        <br />
+        <select onChange={e => this.handleChallengeSelect(e)}>
           {this.state.allChallenges.map(challenge => {
-            return (
-            <option
-              value={JSON.stringify(challenge)}
-            >
-              {challenge.title}
-            </option>)
-          }
-          )}
+            return <option value={JSON.stringify(challenge)}>
+                {challenge.title}
+              </option>;
+          })}
         </select>
         <br />
         <br />
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Create Challenge"
-          onClick={() => this.handleAddChallengeClick()}
-        />
+        <Button backgroundColor="red" color="white" text="Create Challenge" onClick={() => this.handleAddChallengeClick()} />
         <br />
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Duel"
-          onClick={() => this.handleDuelClick()}
-        />
-      </div>
-    );
+        <Button backgroundColor="red" color="white" text="Duel" onClick={() => this.handleDuelClick()} />
+      </div>;
   }
 }
 
