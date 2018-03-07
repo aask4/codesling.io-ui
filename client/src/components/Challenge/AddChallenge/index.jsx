@@ -82,7 +82,8 @@ class AddChallenge extends Component {
             onClick={e => this.submitChallenge(e)}
           />
         </form>
-      </div>;
+      </div>
+    )
   }
 }
 
