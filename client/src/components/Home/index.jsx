@@ -8,6 +8,8 @@ import AllUsers from '../AllUsers/index.jsx';
 
 import './LandingPage.css';
 
+let slingId;
+
 class Home extends Component {
   state = {
     allChallenges: [],
