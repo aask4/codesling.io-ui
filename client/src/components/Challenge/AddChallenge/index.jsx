@@ -127,8 +127,12 @@ if (expected === actual) {
             />
           </div>
         </form>
+<<<<<<< HEAD
       </div>
     )
+=======
+      </div>)
+>>>>>>> fixed syntax err
   }
 }
 
