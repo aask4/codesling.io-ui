@@ -49,18 +49,6 @@ class Home extends Component {
     return <div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
-        {JSON.stringify(this.props)}
-        <br />
-        <br />
-        {JSON.stringify(this.state)}
-        <br />
-        <br />
-        {JSON.stringify(localStorage)}
-        <br />
-        <br />
-        {JSON.stringify(this.props.history)}
-        <br />
-        <br />
         <select onChange={e => this.handleChallengeSelect(e)}>
           {this.state.allChallenges.map(challenge => {
             return <option value={JSON.stringify(challenge)}>
