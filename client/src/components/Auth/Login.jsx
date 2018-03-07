@@ -51,6 +51,12 @@ export default class Login extends Component {
             placeholder={'enter email'}
             onChange={this.handleInputChange}
             />
+          <Input
+            name='username'
+            type='username'
+            placeholder={'enter username'}
+            onChange={this.handleInputChange}
+            />
           <Input 
             name='password'
             type='password'

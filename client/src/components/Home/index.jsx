@@ -45,6 +45,14 @@ class Home extends Component {
     this.setState({ selectedChallenge: value });
   }
 
+  handleSeeAllClick = () => {
+    this.props.history.push('/challenge');
+  }
+
+  showState() {
+    console.log(this.state);
+  }
+
   render() {
     return (
       <div className="landing-page-container">
@@ -52,7 +60,12 @@ class Home extends Component {
           className="landing-page-logo"
         />
         <br />
+        <div>
+          <button type="button" onClick={() => this.showState()}></button>
+        </div>
+        <br/>
         <select onChange={(e) => this.handleChallengeSelect(e)}>
+          <option value="select">select a challenge</option>
           {this.state.allChallenges.map(challenge => {
             return (
             <option
@@ -77,6 +90,13 @@ class Home extends Component {
           color="white"
           text="Duel"
           onClick={() => this.handleDuelClick()}
+        />
+        <br />
+        <Button
+          backgroundColor="red"
+          color="white"
+          text="See All Challenges"
+          onClick={() => this.handleSeeAllClick()}
         />
       </div>
     );

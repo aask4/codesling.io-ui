@@ -47,12 +47,14 @@ class AddChallenge extends Component {
             placeholder={'enter title'}
             onChange={this.handleChallengeInput}
             />
+            <br/>
           <Input
             name='content'
             type='content'
             placeholder={'enter content'}
             onChange={this.handleChallengeInput}
             />
+            <br/>
           <Input 
             name='difficulty'
             type='difficulty'
