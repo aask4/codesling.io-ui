@@ -37,15 +37,11 @@ class Sling extends Component {
 
     console.log(JSON.parse(challenge).id)
 
-    axios
-      .get('http://localhost:3396/api/testCases', {
+    const {rows} = await axios.get('http://localhost:3396/api/testCases', {
         params: { challenge_id: JSON.parse(challenge).id }
-      })
-      .then(result => {
-        console.log("********************************\n", result.data.rows[0].content);
-        this.setState({ testcase: result.data.rows[0].content });
-      })
-      .catch(err => console.log(err));
+      });
+    this.setState({ testcase: rows[0].content });
+
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
