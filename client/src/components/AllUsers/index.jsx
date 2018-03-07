@@ -29,7 +29,7 @@ class AllUsers extends Component {
           {all_users.length > 0 && all_users.map( user => {
             console.log(typeof localStorage.id, typeof user.id) //this is a string vs a number
             if (localStorage.id !== user.id) {
-              return <li>{user.username}</li> 
+              return <li key={user.id}>{user.username}</li> 
             }
           })}
         </ul>
