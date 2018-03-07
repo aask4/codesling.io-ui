@@ -4,10 +4,9 @@ import axios from 'axios';
 
 import Button from '../globals/Button';
 import Logo from '../globals/Logo';
+import AllUsers from '../AllUsers/index.jsx';
 
 import './LandingPage.css';
-
-let slingId;
 
 class Home extends Component {
   state = {
@@ -18,17 +17,13 @@ class Home extends Component {
    async componentDidMount() {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`)
+    console.log('*******: ', data)
     this.setState({ allChallenges: data.rows });
    }
 
-  randomSlingId = () => {
-    slingId = `${randomstring.generate()}`;
-  }
-
   handleDuelClick = () => {
-    this.randomSlingId();
     this.props.history.push({
-      pathname: `/${slingId}`,
+      pathname: `/${this.state.selectedChallenge.url}`,
       state: {
         challenge: this.state.selectedChallenge
       }
@@ -45,6 +40,10 @@ class Home extends Component {
     this.setState({ selectedChallenge: value });
   }
 
+  handleSeeAllClick = () => {
+    this.props.history.push('/challenge');
+  }
+
   render() {
     return (
       <div className="landing-page-container">
@@ -52,7 +51,25 @@ class Home extends Component {
           className="landing-page-logo"
         />
         <br />
+        <div>
+          <AllUsers />
+        </div>
+        <br/>
+        {/* <select onChange={(e) => this.handleChallengeSelect(e)}> */}
+          {/* <option value="select">Open Challenges</option>
+          {this.state.allChallenges.map(challenge => {
+            return (
+            <option
+              value={JSON.stringify(challenge)}
+            >
+              {challenge.title}
+            </option>)
+          }
+          )}
+        </select> */}
+        <br/>
         <select onChange={(e) => this.handleChallengeSelect(e)}>
+          <option value="select">select a challenge</option>
           {this.state.allChallenges.map(challenge => {
             return (
             <option
@@ -77,6 +94,13 @@ class Home extends Component {
           color="white"
           text="Duel"
           onClick={() => this.handleDuelClick()}
+        />
+        <br />
+        <Button
+          backgroundColor="red"
+          color="white"
+          text="See All Challenges"
+          onClick={() => this.handleSeeAllClick()}
         />
       </div>
     );

@@ -19,21 +19,21 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Switch>
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={Signup} />
-          <Route path='/home' component={(props) => (
-            <Protected component={Home} {...props} />
-          )}/>
-          <Route path='/addChallenge' component={AddChallenge} />
-          <Route path='/challenge' component={(props) => (
-            <Protected component={Challenge} {...props} />
-          )}/>
-          <Route path='/slinger' component={Slinger} />
-          <Route path='/history' component={History} />
-          <Route path='/:sling' component={Sling} />
-          <Route path='/' component={LandingPage} />
-        </Switch>
+          <Switch>
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/home' component={(props) => (
+              <Protected component={Home} {...props} />
+            )}/>
+            <Route path='/addChallenge' component={AddChallenge} />
+            <Route path='/challenge' component={(props) => (
+              <Protected component={Challenge} {...props} />
+            )}/>
+            <Route path='/slinger' component={Slinger} />
+            <Route path='/history' component={History} />
+            <Route path='/:sling' component={Sling} />
+            <Route path='/' component={LandingPage} />
+          </Switch>
       </div>
     )
   }

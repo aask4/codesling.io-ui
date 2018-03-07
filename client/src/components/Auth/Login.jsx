@@ -32,7 +32,7 @@ export default class Login extends Component {
       localStorage.setItem('token', data.data.token.accessToken)
       data ? this.props.history.push('/home') : this.props.history.push('/login');
     } catch (err) {
-      throw new Error(err);
+      console.log('Login error: ', err)
     }
   }
 
@@ -49,6 +49,12 @@ export default class Login extends Component {
             name='email'
             type='email'
             placeholder={'enter email'}
+            onChange={this.handleInputChange}
+            />
+          <Input
+            name='username'
+            type='username'
+            placeholder={'enter username'}
             onChange={this.handleInputChange}
             />
           <Input 

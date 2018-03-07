@@ -59,6 +59,7 @@ class Sling extends Component {
   }
 
   submitCode = () => {
+    console.log(this.state);
     const { socket } = this.props;
     const { ownerText } = this.state;
     const email = localStorage.getItem('email');
@@ -97,9 +98,13 @@ class Sling extends Component {
             />
         </div>
         <div className="stdout-container">
-            {this.state.challenge.title || this.props.challenge.title}
+            {/* {this.state.challenge.title || this.props.challenge.title} */}
+            {/* <hr/> */}
+            {/* <br/> */}
+            Prompt:
             <br/>
             {this.state.challenge.content || this.props.challenge.content}
+            <hr/>
           <Stdout text={this.state.stdout}/>
           <Button
             className="run-btn"
