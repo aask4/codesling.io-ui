@@ -7,6 +7,7 @@ import Button from "../../globals/Button/";
 import Logo from "../../globals/Logo";
 
 import "./Auth.css";
+let slingId;
 
 class AddChallenge extends Component {
   state = {
@@ -19,16 +20,14 @@ class AddChallenge extends Component {
   submitChallenge = async e => {
     e.preventDefault();
 
-    const { title, content, testcase, difficulty } = this.state;
+    const { title, content, test, difficulty } = this.state;
 
     const id = localStorage.getItem('id');
     const body = {
       title,
       content,
-      testcase,
       difficulty,
       user_id: id,
-      url: slingId,
       type: 0
     };
     const { data } = await axios.post(

@@ -24,7 +24,6 @@ class Sling extends Component {
       challenge: '',
       stdout: '',
       result: '',
-      testcase: '',
     }
   }
 
@@ -34,14 +33,6 @@ class Sling extends Component {
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
-
-    console.log(JSON.parse(challenge).id)
-
-    const {rows} = await axios.get('http://localhost:3396/api/testCases', {
-        params: { challenge_id: JSON.parse(challenge).id }
-      });
-    this.setState({ testcase: rows[0].content });
-
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
@@ -61,12 +52,6 @@ class Sling extends Component {
     });
 
     socket.on('server.run', ({ stdout, email }) => {
-      console.log(stdout.trim(), this.state.testcase, stdout === this.state.testcase)
-      if (stdout.trim() === this.state.testcase) {
-        this.setState({result: 'success'});
-      } else {
-        this.setState({result: 'failure'});
-      }
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null;
     });
@@ -77,9 +62,9 @@ class Sling extends Component {
   submitCode = () => {
     console.log(this.state);
     const { socket } = this.props;
-    const { ownerText } = this.state;
+    const { ownerText, challenge } = this.state;
     const email = localStorage.getItem('email');
-    socket.emit('client.run', { text: ownerText, email });
+    socket.emit('client.run', { text: ownerText, email, challenge_id: challenge.id });
   }
 
   handleChange = throttle((editor, metadata, value) => {

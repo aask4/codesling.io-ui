@@ -25,10 +25,6 @@ class Home extends Component {
 
   randomSlingId = () => {
     slingId = `${randomstring.generate()}`;
-  };
-
-  randomSlingId = () => {
-    slingId = `${randomstring.generate()}`;
   }
 
   handleDuelClick = () => {
