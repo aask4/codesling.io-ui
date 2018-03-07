@@ -11,7 +11,7 @@ const createENVFile = (directory, variables) => {
 
 const buildEnv = () => {
   _.each(envVariables, (value, key) => {
-    fs.writeFileSync(`./${key}/.env`, '')
+    fs.writeFileSync(`./${key}/.env`, '', 'utf8')
     createENVFile(key, value);
   });
 }
