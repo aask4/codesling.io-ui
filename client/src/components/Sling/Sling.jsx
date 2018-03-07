@@ -22,17 +22,27 @@ class Sling extends Component {
       challengerText: null,
       text: '',
       challenge: '',
-      stdout: ''
+      stdout: '',
+      result: '',
+      testcase: '',
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { socket, challenge } = this.props;
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
-    
+
+    console.log(JSON.parse(challenge).id)
+
+    const {rows} = await axios.get('http://localhost:3396/api/testCases', {
+        params: { challenge_id: JSON.parse(challenge).id }
+      });
+    this.setState({ testcase: rows[0].content });
+
+
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
         id,
@@ -51,6 +61,12 @@ class Sling extends Component {
     });
 
     socket.on('server.run', ({ stdout, email }) => {
+      console.log(stdout.trim(), this.state.testcase, stdout === this.state.testcase)
+      if (stdout.trim() === this.state.testcase) {
+        this.setState({result: 'success'});
+      } else {
+        this.setState({result: 'failure'});
+      }
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null;
     });
@@ -104,8 +120,9 @@ class Sling extends Component {
             Prompt:
             <br/>
             {this.state.challenge.content || this.props.challenge.content}
-            <hr/>
-          <Stdout text={this.state.stdout}/>
+
+          <Stdout text={this.state.stdout + '\n' + this.state.result} />
+
           <Button
             className="run-btn"
             text="Run Code"
@@ -115,7 +132,7 @@ class Sling extends Component {
           />
         </div>
         <div className="code2-editor-container">
-          <CodeMirror 
+          <CodeMirror
             editorDidMount={this.initializeEditor}
             value={this.state.challengerText}
             options={{

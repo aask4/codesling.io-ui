@@ -21,15 +21,20 @@ class Home extends Component {
     this.setState({ allChallenges: data.rows });
    }
 
+  randomSlingId = () => {
+    slingId = `${randomstring.generate()}`;
+  }
+
   handleDuelClick = () => {
+    this.randomSlingId();
     this.props.history.push({
-      pathname: `/${this.state.selectedChallenge.url}`,
+      pathname: `/${slingId}`,
       state: {
         challenge: this.state.selectedChallenge
       }
     });
   }
-  
+
   handleAddChallengeClick = () => {
     this.props.history.push('/addChallenge');
   }
@@ -45,12 +50,10 @@ class Home extends Component {
   }
 
   render() {
-    return (
-      <div className="landing-page-container">
-        <Logo
-          className="landing-page-logo"
-        />
+    return <div className="landing-page-container">
+        <Logo className="landing-page-logo" />
         <br />
+
         <div>
           <AllUsers />
         </div>
@@ -70,25 +73,18 @@ class Home extends Component {
         <br/>
         <select onChange={(e) => this.handleChallengeSelect(e)}>
           <option value="select">select a challenge</option>
+
           {this.state.allChallenges.map(challenge => {
-            return (
-            <option
-              value={JSON.stringify(challenge)}
-            >
-              {challenge.title}
-            </option>)
-          }
-          )}
+            return <option value={JSON.stringify(challenge)}>
+                {challenge.title}
+              </option>;
+          })}
         </select>
         <br />
         <br />
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Create Challenge"
-          onClick={() => this.handleAddChallengeClick()}
-        />
+        <Button backgroundColor="red" color="white" text="Create Challenge" onClick={() => this.handleAddChallengeClick()} />
         <br />
+
         <Button
           backgroundColor="red"
           color="white"
