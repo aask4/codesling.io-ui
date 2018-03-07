@@ -19,12 +19,13 @@ class AddChallenge extends Component {
   submitChallenge = async e => {
     e.preventDefault();
 
-    let slingId = `${randomstring.generate()}`;
-    const { title, content, difficulty } = this.state;
+    const { title, content, testcase, difficulty } = this.state;
+
     const id = localStorage.getItem('id');
     const body = {
       title,
       content,
+      testcase,
       difficulty,
       user_id: id,
       url: slingId,
@@ -82,8 +83,7 @@ class AddChallenge extends Component {
             onClick={e => this.submitChallenge(e)}
           />
         </form>
-      </div>
-    );
+      </div>;
   }
 }
 

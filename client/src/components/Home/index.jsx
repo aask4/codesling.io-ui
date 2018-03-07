@@ -27,6 +27,10 @@ class Home extends Component {
     slingId = `${randomstring.generate()}`;
   };
 
+  randomSlingId = () => {
+    slingId = `${randomstring.generate()}`;
+  }
+
   handleDuelClick = () => {
     this.randomSlingId();
     this.props.history.push({
@@ -35,7 +39,7 @@ class Home extends Component {
         challenge: this.state.selectedChallenge
       }
     });
-  };
+  }
 
   handleAddChallengeClick = () => {
     this.props.history.push("/addChallenge");
@@ -56,6 +60,7 @@ class Home extends Component {
       <div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
+
         <div>
           <AllUsers />
         </div>
@@ -75,6 +80,7 @@ class Home extends Component {
         <br />
         <select onChange={e => this.handleChallengeSelect(e)}>
           <option value="select">select a challenge</option>
+
           {this.state.allChallenges.map(challenge => {
             return (
               <option value={JSON.stringify(challenge)}>
@@ -85,13 +91,9 @@ class Home extends Component {
         </select>
         <br />
         <br />
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Create Challenge"
-          onClick={() => this.handleAddChallengeClick()}
-        />
+        <Button backgroundColor="red" color="white" text="Create Challenge" onClick={() => this.handleAddChallengeClick()} />
         <br />
+
         <Button
           backgroundColor="red"
           color="white"
