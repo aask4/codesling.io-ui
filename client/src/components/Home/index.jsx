@@ -44,10 +44,6 @@ class Home extends Component {
     this.props.history.push('/challenge');
   }
 
-  showState() {
-    console.log(this.state);
-  }
-
   render() {
     return (
       <div className="landing-page-container">
@@ -56,7 +52,6 @@ class Home extends Component {
         />
         <br />
         <div>
-          <button type="button" onClick={() => this.showState()}></button>
           <AllUsers />
         </div>
         <br/>

@@ -20,20 +20,14 @@ class AllUsers extends Component {
 
   }
 
-  showState() {
-    console.log(this.state);
-    console.log(localStorage.id)
-  }
-
   render() {
     let {all_users} = this.state;
 
     return (
       <div>
-      <button type="button" onClick={() => this.showState()}></button>
         <ul className="userList">
           {all_users.length > 0 && all_users.map( user => {
-            console.log(typeof localStorage.id, typeof user.id)
+            console.log(typeof localStorage.id, typeof user.id) //this is a string vs a number
             if (localStorage.id !== user.id) {
               return <li>{user.username}</li> 
             }
