@@ -4,10 +4,9 @@ import axios from 'axios';
 
 import Button from '../globals/Button';
 import Logo from '../globals/Logo';
+import AllUsers from '../AllUsers/index.jsx';
 
 import './LandingPage.css';
-
-let slingId;
 
 class Home extends Component {
   state = {
@@ -18,17 +17,13 @@ class Home extends Component {
    async componentDidMount() {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`)
+    console.log('*******: ', data)
     this.setState({ allChallenges: data.rows });
    }
 
-  randomSlingId = () => {
-    slingId = `${randomstring.generate()}`;
-  }
-
   handleDuelClick = () => {
-    this.randomSlingId();
     this.props.history.push({
-      pathname: `/${slingId}`,
+      pathname: `/${this.state.selectedChallenge.url}`,
       state: {
         challenge: this.state.selectedChallenge
       }
@@ -62,7 +57,21 @@ class Home extends Component {
         <br />
         <div>
           <button type="button" onClick={() => this.showState()}></button>
+          <AllUsers />
         </div>
+        <br/>
+        {/* <select onChange={(e) => this.handleChallengeSelect(e)}> */}
+          {/* <option value="select">Open Challenges</option>
+          {this.state.allChallenges.map(challenge => {
+            return (
+            <option
+              value={JSON.stringify(challenge)}
+            >
+              {challenge.title}
+            </option>)
+          }
+          )}
+        </select> */}
         <br/>
         <select onChange={(e) => this.handleChallengeSelect(e)}>
           <option value="select">select a challenge</option>
