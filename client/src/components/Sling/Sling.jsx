@@ -28,7 +28,7 @@ class Sling extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { socket, challenge } = this.props;
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
     socket.on('connect', () => {
