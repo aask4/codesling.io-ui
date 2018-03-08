@@ -17,7 +17,10 @@ class History extends Component {
   render() {
     return (
       <div>
-        <HistoryList history={this.state.history}/>
+        <h2><strong>Challenge History</strong></h2>
+        <hr/>
+        <br/>
+        {this.state.history.length > 0 && <HistoryList history={this.state.history}/>}
       </div>
     );
   }
