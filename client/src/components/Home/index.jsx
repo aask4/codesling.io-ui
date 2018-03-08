@@ -5,8 +5,11 @@ import axios from "axios";
 import Button from "../globals/Button";
 import Logo from "../globals/Logo";
 import AllUsers from "../AllUsers/index.jsx";
+import History from '../History/index.jsx';
 
 import "./LandingPage.css";
+
+let slingId;
 
 class Home extends Component {
   state = {
@@ -51,11 +54,18 @@ class Home extends Component {
     this.props.history.push("/challenge");
   };
 
+  goToHistory(){
+    this.props.history.push('/history')
+  }
+
   render() {
     return (
       <div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
+        <div>
+          <button type="button" onClick={() => this.goToHistory()}>Check Out Challenge History</button>
+        </div>
 
         <div>
           <AllUsers />
