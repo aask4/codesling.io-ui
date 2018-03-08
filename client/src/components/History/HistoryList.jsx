@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './History.css';
+
 export const HistoryList = ({ history }) => {
   let outcome;
   return (
