@@ -46,6 +46,22 @@ class AddChallenge extends Component {
     this.setState({ [name]: value });
   };
 
+  // testCaseTemplate = () => {
+  //   const test = (func) => {
+  //     function solution(/*paramaters*/) {
+  //       //solution code here
+  //     }
+
+  //     let expected = solution(/*arguments*/);
+  //     let actual = func(/*arguments*/);
+
+  //     return expected === actual
+  //       ? console.log("Solved")
+  //       : console.log('Expected ' + expected + ', but got ' + actual);
+  //   };
+  //   test(/*func*/);
+  // };
+
   render() {
     return (
       <div className="login-form-container">
@@ -57,24 +73,31 @@ class AddChallenge extends Component {
             placeholder={"enter title"}
             onChange={this.handleChallengeInput}
           />
+          <br />
+          <br />
           <Input
             name="content"
             type="content"
-            placeholder={"enter content"}
+            placeholder={"enter description"}
             onChange={this.handleChallengeInput}
           />
+          <br />
+          <br />
           <textarea
             name="test"
             type="test"
-            placeholder={"enter test"}
             onChange={this.handleChallengeInput}
           />
+          <br />
+          <br />
           <Input
             name="difficulty"
             type="difficulty"
             placeholder={"enter your difficulty"}
             onChange={this.handleChallengeInput}
           />
+          <br />
+          <br />
           <Button
             backgroundColor="red"
             color="white"
