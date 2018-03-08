@@ -24,6 +24,7 @@ class Sling extends Component {
       challenge: '',
       stdout: '',
       result: '',
+      startTime: Date.now()
     }
   }
 
@@ -54,6 +55,9 @@ class Sling extends Component {
     socket.on('server.run', ({ stdout, email }) => {
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null;
+
+      let stdoutCopy = stdout.slice(0, stdout.length - 1);
+      stdoutCopy === ('Solved' || 'Lose') && this.resolveChallenge(stdoutCopy);
     });
 
     window.addEventListener('resize', this.setEditorSize);
@@ -78,6 +82,52 @@ class Sling extends Component {
   initializeEditor = (editor) => {
     this.editor = editor;
     this.setEditorSize();
+  }
+
+  resolveChallenge = async (stdoutCopy) => {
+  let endTime = Date.now();
+  let seconds = Math.floor((endTime - this.state.startTime)/1000);
+  let minutes = 0;
+  let remainingSeconds = seconds;
+  let timeString;
+
+  while (remainingSeconds >= 60) {
+    minutes += 1;
+    remainingSeconds -= 60;
+  }
+  let minuteString = minutes > 1 ? `${minutes} minutes` : `${minutes} minute` 
+
+  timeString = minutes > 0 ? `${minuteString} and ${remainingSeconds} seconds` : `${seconds} seconds`;
+
+  let clout = Math.floor(this.state.challenge.difficulty * 1.1 * 20);
+  let outcome;
+  stdoutCopy === 'Solved' ? outcome = 1 : outcome = 0; //Win-Lose
+
+  let result = {
+    outcome: outcome,
+    time: timeString,
+    clout: clout,
+    user_id: Number(localStorage.id),   //this will always be current user id
+    challenger_id: 1,         //will need Alex's help in obtaining challenger (other person's id)
+    challenge_id: this.state.challenge.id
+  }
+  console.log(result);
+
+  //post to History
+  //will always post twice (one from user and one from challenger)
+  //that way we can easily grab history data without too much logic
+  await axios.post(`http://localhost:3396/api/history/addHistory`, result)
+
+  //update userstable clout and kdr
+
+  let update = {
+    user_id: Number(localStorage.id),
+    clout: clout,
+    kdr_change: outcome             // if 0, -1 in db, else + 1
+  }
+  // await axios.post(`http://localhost:3396/api/users/updateUserScore`, update)
+
+
   }
 
   render() {
