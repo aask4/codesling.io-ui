@@ -2,8 +2,9 @@ import React from 'react';
 
 import './History.css';
 
-export const HistoryList = ({ history }) => {
+export const HistoryList = ({ history, userInfo }) => {
   let outcome;
+
   return (
     <div>
       {history.map( (hist, i) => {
