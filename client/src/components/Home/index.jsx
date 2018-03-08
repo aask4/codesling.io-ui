@@ -54,9 +54,10 @@ class Home extends Component {
   async handleIinitateDuelClick() {
     const {data} = await axios.post('http://localhost:3396/api/openDuels',
       {
-        challenge_id: this.state.selectedChallenge.id,
+        challenge_id: JSON.parse(this.state.selectedChallenge).id,
         challenger_id: localStorage.getItem('id')
       });
+      console.log('data >>>>>>>>> ', data);
     this.setState({OpenDuels: this.state.OpenDuels.push(data)});
   }
 
