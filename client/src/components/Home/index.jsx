@@ -11,6 +11,8 @@ import "./LandingPage.css";
 
 let slingId;
 
+let slingId;
+
 class Home extends Component {
   state = {
     allChallenges: [],
