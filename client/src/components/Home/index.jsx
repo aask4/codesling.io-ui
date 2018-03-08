@@ -25,6 +25,10 @@ class Home extends Component {
 
   randomSlingId = () => {
     slingId = `${randomstring.generate()}`;
+  };
+
+  randomSlingId = () => {
+    slingId = `${randomstring.generate()}`;
   }
 
   handleDuelClick = () => {
@@ -51,10 +55,15 @@ class Home extends Component {
     this.props.history.push("/challenge");
   };
 
+  logout() {
+    window.localStorage.clear();
+    this.props.history.push('/')
+  }
   render() {
     return (
       <div className="landing-page-container">
         <Logo className="landing-page-logo" />
+        <button style={{float: 'right'}} onClick={()=>this.logout()}>log out</button>
         <br />
 
         <div>
