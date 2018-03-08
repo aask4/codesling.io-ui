@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import randomstring from 'randomstring';
-
+import React, { Component } from "react";
+import axios from "axios";
+import randomstring from "randomstring";
+import CodeMirror from "react-codemirror2";
 import Input from "../../globals/forms/Input";
 import Button from "../../globals/Button/";
 import Logo from "../../globals/Logo";
@@ -22,7 +22,7 @@ class AddChallenge extends Component {
 
     const { title, content, test, difficulty } = this.state;
 
-    const id = localStorage.getItem('id');
+    const id = localStorage.getItem("id");
     const body = {
       title,
       content,
@@ -36,7 +36,7 @@ class AddChallenge extends Component {
     );
     await axios.post("http://localhost:3396/api/testCases", {
       content: test,
-      challenge_id: data.id,
+      challenge_id: data.id
     });
     this.props.history.push("/home");
   };
@@ -63,10 +63,10 @@ class AddChallenge extends Component {
             placeholder={"enter content"}
             onChange={this.handleChallengeInput}
           />
-          <Input
+          <textarea
             name="test"
             type="test"
-            placeholder={"enter test cases"}
+            placeholder={"enter test"}
             onChange={this.handleChallengeInput}
           />
           <Input
@@ -82,7 +82,8 @@ class AddChallenge extends Component {
             onClick={e => this.submitChallenge(e)}
           />
         </form>
-      </div>;
+      </div>
+    );
   }
 }
 
