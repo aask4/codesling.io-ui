@@ -5,6 +5,7 @@ import axios from "axios";
 import Button from "../globals/Button";
 import Logo from "../globals/Logo";
 import AllUsers from "../AllUsers/index.jsx";
+import OpenDuels from "../OpenDuels/index.jsx";
 
 import "./LandingPage.css";
 
@@ -13,7 +14,8 @@ let slingId;
 class Home extends Component {
   state = {
     allChallenges: [],
-    selectedChallenge: {}
+    selectedChallenge: {},
+    selectedDuel: {}
   };
 
   async componentDidMount() {
@@ -49,13 +51,25 @@ class Home extends Component {
     this.setState({ selectedChallenge: value });
   };
 
+  async handleIinitateDuelClick() {
+    const {data} = await axios.post('http://localhost:3396/api/openDuels',
+      {
+        challenge_id: this.state.selectedChallenge.id,
+        challenger_id: localStorage.getItem('id')
+      });
+    this.setState({OpenDuels: this.state.OpenDuels.push(data)});
+  }
+
+  handleDuelSelect = ({value}) => {
+    this.setState({selectedDuel: value});
+  }
+
   handleSeeAllClick = () => {
     this.props.history.push("/challenge");
   };
 
   render() {
-    return (
-      <div className="landing-page-container">
+    return <div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
 
@@ -80,33 +94,23 @@ class Home extends Component {
           <option value="select">select a challenge</option>
 
           {this.state.allChallenges.map(challenge => {
-            return (
-              <option value={JSON.stringify(challenge)}>
+            return <option value={JSON.stringify(challenge)}>
                 {challenge.title}
-              </option>
-            );
+              </option>;
           })}
         </select>
         <br />
         <br />
         <Button backgroundColor="red" color="white" text="Create Challenge" onClick={() => this.handleAddChallengeClick()} />
         <br />
-
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Duel"
-          onClick={() => this.handleDuelClick()}
-        />
+        <Button backgroundColor="red" color="white" text="Initiate Duel" onClick={() => this.handleIinitateDuelClick()} />
         <br />
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="See All Challenges"
-          onClick={() => this.handleSeeAllClick()}
-        />
-      </div>
-    );
+        <OpenDuels handleDuelSelect={this.handleDuelSelect.bind(this)} />
+        <br />
+        <Button backgroundColor="red" color="white" text="Join Duel" onClick={() => this.handleJoinDuelClick()} />
+        <br />
+        <Button backgroundColor="red" color="white" text="See All Challenges" onClick={() => this.handleSeeAllClick()} />
+      </div>;
   }
 }
 
