@@ -13,6 +13,7 @@ export const HistoryList = ({ history, userInfo }) => {
         <div className="outcomes" key={i}>
           <div>Outcome: {outcome}</div>
           <div>Opponent: {hist.receiver.username}</div>
+          <div>Time: {hist.time}</div>
           <div>Clout Earned: {hist.outcome === 0 ? 0 : hist.clout}</div>
         </div>
       )})}
