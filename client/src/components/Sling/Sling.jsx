@@ -99,7 +99,8 @@ class Sling extends Component {
 
   timeString = minutes > 0 ? `${minuteString} and ${remainingSeconds} seconds` : `${seconds} seconds`;
 
-  let clout = Math.floor(this.state.challenge.difficulty * 1.1 * 20);
+  let clout = Math.floor(this.state.challenge.difficulty * 1.1 + 20);
+  console.log(clout)
   let outcome;
   stdoutCopy === 'Solved' ? outcome = 1 : outcome = 0; //Win-Lose
 
@@ -111,7 +112,6 @@ class Sling extends Component {
     challenger_id: 1,         //will need Alex's help in obtaining challenger (other person's id)
     challenge_id: this.state.challenge.id
   }
-  console.log(result);
 
   //post to History
   //will always post twice (one from user and one from challenger)
@@ -119,15 +119,12 @@ class Sling extends Component {
   await axios.post(`http://localhost:3396/api/history/addHistory`, result)
 
   //update userstable clout and kdr
-
   let update = {
     user_id: Number(localStorage.id),
     clout: clout,
-    kdr_change: outcome             // if 0, -1 in db, else + 1
+    kdr_change: outcome   
   }
-  // await axios.post(`http://localhost:3396/api/users/updateUserScore`, update)
-
-
+  await axios.post(`http://localhost:3396/api/users/updateUserScore`, update)
   }
 
   render() {
