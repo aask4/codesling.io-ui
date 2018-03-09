@@ -8,7 +8,7 @@ import AllUsers from "../AllUsers/index.jsx";
 import OpenDuels from "../OpenDuels/index.jsx";
 import History from '../History/index.jsx';
 
-let slingId;
+
 import "./LandingPage.css";
 let slingId
 
@@ -107,7 +107,7 @@ class Home extends Component {
   }
 
   render() {
-    return <div className="landing-page-container">
+    return (<div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
         <div>
@@ -135,14 +135,11 @@ class Home extends Component {
           <option value="select">select a challenge</option>
 
           {this.state.allChallenges.map(challenge => {
-<<<<<<< HEAD
-            return <option value={JSON.stringify(challenge)}>
-=======
             return (
               <option key={challenge.id} value={JSON.stringify(challenge)}>
->>>>>>> added friend system
                 {challenge.title}
-              </option>;
+              </option>
+            )
           })}
         </select>
         <br />
@@ -151,14 +148,6 @@ class Home extends Component {
         <br />
         <Button backgroundColor="red" color="white" text="Initiate Duel" onClick={() => this.handleIinitateDuelClick()} />
         <br />
-<<<<<<< HEAD
-        <OpenDuels handleDuelSelect={this.handleDuelSelect.bind(this)} addDuels={this.addDuels.bind(this)} openDuels={this.state.openDuels} fetchOpenDuels={this.fetchOpenDuels.bind(this)} />
-        <br />
-        <Button backgroundColor="red" color="white" text="Join Duel" onClick={() => this.handleJoinDuelClick()} />
-        <br />
-        <Button backgroundColor="red" color="white" text="See All Challenges" onClick={() => this.handleSeeAllClick()} />
-      </div>;
-=======
         <Button 
           backgroundColor="red"
           color="white"
@@ -166,8 +155,7 @@ class Home extends Component {
           onClick={() => this.handleSeeAllClick()}
         />
       </div>
-    );
->>>>>>> added friend system
+    )
   }
 }
 
