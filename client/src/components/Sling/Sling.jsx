@@ -27,7 +27,8 @@ class Sling extends Component {
       challenge: '',
       stdout: '',
       result: '',
-      startTime: Date.now()
+      startTime: Date.now(),
+      allowRunButton: true 
     }
   }
 
@@ -62,10 +63,11 @@ class Sling extends Component {
 
     socket.on("server.run", ({ stdout, email }) => {
       const ownerEmail = localStorage.getItem("email");
-      email === ownerEmail ? this.setState({ stdout }) : null;
+      email === ownerEmail ? this.setState({ stdout }) : this.setState({stdout: 'lose'});
 
-      let stdoutCopy = stdout.slice(0, stdout.length - 1);
-      stdoutCopy === ('Solved' || 'Lose') && this.resolveChallenge(stdoutCopy);
+      let stdoutCopy = this.state.stdout.slice(0, stdout.length - 1);
+      stdoutCopy === 'solved' && this.resolveChallenge(stdoutCopy)
+      stdoutCopy === 'lose' && this.resolveChallenge(stdoutCopy);
     });
 
     window.addEventListener("resize", this.setEditorSize);
@@ -112,16 +114,18 @@ class Sling extends Component {
   timeString = minutes > 0 ? `${minuteString} and ${remainingSeconds} seconds` : `${seconds} seconds`;
 
   let clout = Math.floor(this.state.challenge.difficulty * 1.1 + 20);
-  console.log(clout)
   let outcome;
-  stdoutCopy === 'Solved' ? outcome = 1 : outcome = 0; //Win-Lose
+  stdoutCopy === 'solved' ? outcome = 1 : outcome = 0; //Win-Lose
+
+  let challenger_id;
+  localStorage.id === 1 ? challenger_id = 2 : challenger_id = 1;
 
   let result = {
     outcome: outcome,
     time: timeString,
     clout: clout,
     user_id: Number(localStorage.id),   //this will always be current user id
-    challenger_id: 1,         //will need Alex's help in obtaining challenger (other person's id)
+    challenger_id: challenger_id,         //will need Alex's help in obtaining challenger (other person's id)
     challenge_id: this.state.challenge.id
   }
 
@@ -137,6 +141,9 @@ class Sling extends Component {
     kdr_change: outcome
   }
   await axios.post(`http://localhost:3396/api/users/updateUserScore`, update)
+
+  this.setState({allowRunButton: false});
+  setTimeout( () => this.props.history.push("/home"), 5000)
   }
 
   render() {
@@ -164,13 +171,14 @@ class Sling extends Component {
           <br />
           <br />
           <div className="btn-container">
-            <Button
+            {this.state.allowRunButton && <Button
               className="run-btn"
               text="Run Code"
               backgroundColor="red"
               color="white"
               onClick={() => this.submitCode()}
-            />
+            />}
+            {!this.state.allowRunButton && <div>Game OVER: redirecting in 5 seconds</div>}
           </div>
           <br />
           <br />

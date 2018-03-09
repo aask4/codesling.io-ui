@@ -31,6 +31,7 @@ class SlingIndex extends Component {
       console.log("I HEAR YOU I HEAR YOU");
       this.setState({ waiting: false });
     });
+    console.log('Sling index props: ', this.props)
 
     if (this.props.location.state) {
       if (this.props.location.state.opponent) {
@@ -43,7 +44,9 @@ class SlingIndex extends Component {
     console.log(this.state.waiting, this.props.location.state)
       console.log('WE SHOULD BE RERENDERING')
       return (this.state.waiting) ? (<WaitingPage />) : (
-        <Sling socket={this.state.socket} challenge={this.props.location.state.challenge}/>
+        <Sling socket={this.state.socket} 
+          challenge={this.props.location.state.challenge}
+          history={this.props.history}/>
       );
 
   }
