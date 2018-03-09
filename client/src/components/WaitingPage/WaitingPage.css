@@ -1,0 +1,20 @@
+.outer {
+  z-index: 3;
+  top: 20px;
+  left: 20%;
+  position: fixed;
+  height: 600px;
+  width: 800px;
+}
+
+.waiting {
+  text-align: center;
+  background-color: brown;
+  color: blanchedalmond;
+}
+
+.waiting img {
+  padding: 10px;
+  height: 400px;
+  width: 600px;
+}
