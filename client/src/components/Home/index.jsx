@@ -25,7 +25,6 @@ class Home extends Component {
     const { data } = await axios.get(
       `http://localhost:3396/api/usersChallenges/${id}`
     );
-    console.log("*******: ", data);
     this.setState({ allChallenges: data.rows });
   }
 
@@ -36,20 +35,14 @@ class Home extends Component {
   handleJoinDuelClick = async () => {
     const curr_user = await localStorage.getItem('id');
     if ( curr_user != this.state.selectedDuel.challenger_id) {
-      // const openDuel = await axios.put('http://localhost:3396/api/openDuels',
-      // {
-      //   data: {
-      //     opponent_id: localStorage.getItem('id'),
-      //     duel_id: this.state.selectedDuel.duel_id
-      //   }
-      // })
       this.props.history.push({
         pathname: `/${this.state.selectedDuel.sling_id}`,
         state: {
           challenge: JSON.stringify(this.state.selectedDuel),
           user_id: localStorage.getItem('id'),
           opponent: true
-        }
+        },
+        history: this.props.history
       });
       await axios.delete('http://localhost:3396/api/openDuels',
         {data: {duel_id: this.state.selectedDuel.duel_id}
@@ -79,7 +72,8 @@ class Home extends Component {
         state: {
           challenge: this.state.selectedChallenge,
           user_id: localStorage.getItem('id'),
-        }
+        },
+        history: this.props.history
       });
   }
 
