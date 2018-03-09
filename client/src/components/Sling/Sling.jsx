@@ -35,9 +35,13 @@ class Sling extends Component {
     const { socket, challenge } = this.props;
     const startChall =
       typeof challenge === "string" ? JSON.parse(challenge) : {};
-    socket.on("connect", () => {
-      socket.emit("client.ready", startChall);
-    });
+
+    //because of waiting page, 'connect' already fired so this no longer works
+    // socket.on("connect", () => {
+    //   socket.emit("client.ready", startChall);
+    // });
+
+    socket.emit("client.ready", startChall);
 
     socket.on("server.initialState", ({ id, text, challenge }) => {
       this.setState({
