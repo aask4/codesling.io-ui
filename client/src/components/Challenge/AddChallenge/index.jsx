@@ -127,8 +127,7 @@ if (expected === actual) {
             />
           </div>
         </form>
-      </div>
-    )
+      </div>)
   }
 }
 
