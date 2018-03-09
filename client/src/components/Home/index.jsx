@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import randomstring from "randomstring";
 import axios from "axios";
+import { Route } from 'react-router-dom'
 
 import Button from "../globals/Button";
 import Logo from "../globals/Logo";
 import AllUsers from "../AllUsers/index.jsx";
 import OpenDuels from "../OpenDuels/index.jsx";
 import History from '../History/index.jsx';
-
+import Logout from '../Auth/Logout.jsx';
 
 import "./LandingPage.css";
 let slingId
@@ -110,6 +111,7 @@ class Home extends Component {
     return (<div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
+        <Route path='/' component={Logout}/>
         <div>
           <button type="button" onClick={() => this.goToHistory()}>Check Out Challenge History</button>
         </div>

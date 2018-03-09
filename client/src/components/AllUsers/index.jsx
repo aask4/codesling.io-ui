@@ -15,25 +15,20 @@ class AllUsers extends Component {
   }
 
   async componentDidMount(){
-    await this.fetchAllFriends();
-    await this.fetchAllUsers();
+    let result = await this.fetchAllUsers();
+    let reuslt2 = await this.fetchAllFriends();
   }
   async fetchAllFriends() {
     let user_id = Number(window.localStorage.getItem('id'))
-    console.log('this is the user_id', user_id)
     try {
-      let { data }= await axios.get(`http://localhost:3396/api/friends/fetchAllFriends/${user_id}`)
+      let { data } = await axios.get(`http://localhost:3396/api/friends/fetchAllFriends/${user_id}`)
       await this.setState({friends: data})
     }catch(e){
-      throw e
+      console.log('this is the err fetching all friends', e)
     }
   }
   async fetchAllUsers(){
     const { data } = await axios.get(`http://localhost:3396/api/users/fetchAllUsers`)
-    console.log('this is the data', data)
-    for(let i = 0; i < data.rows.length; i ++) {
-
-    }
     this.setState({ all_users: data.rows });
   }
   async addFriend(e) {
