@@ -6,6 +6,7 @@ import Button from "../globals/Button";
 import Logo from "../globals/Logo";
 import AllUsers from "../AllUsers/index.jsx";
 import OpenDuels from "../OpenDuels/index.jsx";
+import History from '../History/index.jsx';
 
 import "./LandingPage.css";
 
@@ -91,6 +92,7 @@ class Home extends Component {
     this.props.history.push("/challenge");
   };
 
+
   addDuels = (openDuels) => {
     openDuels && this.setState({openDuels});
   }
@@ -99,12 +101,21 @@ class Home extends Component {
     const {data} = await axios.get('http://localhost:3396/api/openDuels');
     console.log('OpenDuels - open duels returned from server ', data);
     data && this.addDuels(data);
+
+    
+  goToHistory(){
+    this.props.history.push('/history')
   }
 
   render() {
     return <div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
+
+        <div>
+          <button type="button" onClick={() => this.goToHistory()}>Check Out Challenge History</button>
+        </div>
+
         <div>
           <AllUsers />
         </div>
