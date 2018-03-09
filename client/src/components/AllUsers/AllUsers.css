@@ -5,3 +5,6 @@
   width: 200px;
   margin: 1% auto;
 }
+li {
+  list-style-type: none;
+}
