@@ -27,7 +27,6 @@ class Sling extends Component {
       challenge: '',
       stdout: '',
       result: '',
-      waiting: true,
       startTime: Date.now()
     }
   }
@@ -104,7 +103,7 @@ class Sling extends Component {
     minutes += 1;
     remainingSeconds -= 60;
   }
-  let minuteString = minutes > 1 ? `${minutes} minutes` : `${minutes} minute` 
+  let minuteString = minutes > 1 ? `${minutes} minutes` : `${minutes} minute`
 
   timeString = minutes > 0 ? `${minuteString} and ${remainingSeconds} seconds` : `${seconds} seconds`;
 
@@ -131,15 +130,14 @@ class Sling extends Component {
   let update = {
     user_id: Number(localStorage.id),
     clout: clout,
-    kdr_change: outcome   
+    kdr_change: outcome
   }
   await axios.post(`http://localhost:3396/api/users/updateUserScore`, update)
   }
 
   render() {
     const { socket } = this.props;
-    return(this.state.waiting) ?
-    (<WaitingPage />) : (
+    return (
       <div className="sling-container">
         <EditorHeader />
         <div className="code1-editor-container">
