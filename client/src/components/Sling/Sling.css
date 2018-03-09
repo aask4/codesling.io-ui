@@ -39,3 +39,18 @@
   background: #141414;
   padding: 5px;
   margin: 0 30px; }
+
+#solved {
+  color: green;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: center;
+}
+
+#error {
+  color: red;
+}
+
+.btn-container {
+  text-align: center;
+  width: 100%; }

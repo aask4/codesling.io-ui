@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import io from 'socket.io-client/dist/socket.io.js';
+import React, { Component } from "react";
+import io from "socket.io-client/dist/socket.io.js";
 
 import Sling from './Sling.jsx';
 import WaitingPage from '../WaitingPage/index.jsx';
@@ -10,10 +10,16 @@ class SlingIndex extends Component {
     waiting: true
    }
 
+
   componentWillMount() {
-    this.socket = io('http://localhost:4155', {
+    const challenge =
+      typeof this.props.location.state.challenge === "string"
+        ? JSON.parse(this.props.location.state.challenge)
+        : {title: ''};
+    this.socket = io("http://localhost:4155", {
       query: {
-        roomId: this.props.location.pathname.slice(1)
+        roomId: this.props.location.pathname.slice(1),
+        title: challenge.title
       }
     });
 
@@ -39,6 +45,7 @@ class SlingIndex extends Component {
       return (this.state.waiting) ? (<WaitingPage />) : (
         <Sling socket={this.state.socket} challenge={this.props.location.state.challenge}/>
       );
+
   }
 }
 
