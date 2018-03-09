@@ -9,9 +9,7 @@ import OpenDuels from "../OpenDuels/index.jsx";
 import History from '../History/index.jsx';
 
 import "./LandingPage.css";
-let slingId;
-
-let slingId;
+let slingId
 
 class Home extends Component {
   state = {
@@ -102,7 +100,7 @@ class Home extends Component {
     const {data} = await axios.get('http://localhost:3396/api/openDuels');
     console.log('OpenDuels - open duels returned from server ', data);
     data && this.addDuels(data);
-
+  }
     
   goToHistory(){
     this.props.history.push('/history')
