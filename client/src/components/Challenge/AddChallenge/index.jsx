@@ -58,8 +58,8 @@ class AddChallenge extends Component {
   }, 100);
 
   testTemplate = `const func = FILL_ME_IN;
-const expected = func(FILL_ME_IN);
-const actual = FILL_ME_IN;
+const expected = FILL_ME_IN;
+const actual = func(FILL_ME_IN);
 
 //enter one or more tests below
 if (expected === actual) {
