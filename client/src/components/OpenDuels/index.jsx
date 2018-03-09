@@ -26,7 +26,7 @@ class OpenDuels extends Component {
           <option>Choose a Duel</option>
           {this.props.openDuels.map(duel => {
             return <option value={JSON.stringify(duel)}>
-                {duel.title}-{duel.username}
+                {duel.title}-{duel.difficulty}
               </option>;
           })}
         </select>

@@ -46,7 +46,7 @@ class Home extends Component {
       this.props.history.push({
         pathname: `/${this.state.selectedDuel.sling_id}`,
         state: {
-          challenge: JSON.stringify(this.state.selectedDuel),
+          challenge: this.state.selectedDuel,
           user_id: localStorage.getItem('id'),
           opponent: true
         }
@@ -72,13 +72,12 @@ class Home extends Component {
     const {data} = await axios.post('http://localhost:3396/api/openDuels',
       {
         challenge_id: JSON.parse(this.state.selectedChallenge).id,
-        challenger_id: localStorage.getItem('id'),
         sling_id: slingId
       });
     this.props.history.push({
         pathname: `/${data.sling_id}`,
         state: {
-          challenge: this.state.selectedChallenge,
+          challenge: JSON.parse(this.state.selectedChallenge),
           user_id: localStorage.getItem('id'),
         }
       });
