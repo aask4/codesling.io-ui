@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import CodeMirror from 'react-codemirror2';
-import io from 'socket.io-client/dist/socket.io.js';
-import axios from 'axios';
-import { throttle } from 'lodash';
+import React, { Component } from "react";
+import CodeMirror from "react-codemirror2";
+import io from "socket.io-client/dist/socket.io.js";
+import axios from "axios";
+import { throttle } from "lodash";
 
 import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
 import DuelChat from '../DuelChat/index.jsx';
 
-import 'codemirror/mode/javascript/javascript.js';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/base16-dark.css';
-import './Sling.css';
+import "codemirror/mode/javascript/javascript.js";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/base16-dark.css";
+import "./Sling.css";
 
 class Sling extends Component {
   constructor() {
@@ -31,12 +31,13 @@ class Sling extends Component {
 
   async componentDidMount() {
     const { socket, challenge } = this.props;
-    const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
-    socket.on('connect', () => {
-      socket.emit('client.ready', startChall);
+    const startChall =
+      typeof challenge === "string" ? JSON.parse(challenge) : {};
+    socket.on("connect", () => {
+      socket.emit("client.ready", startChall);
     });
 
-    socket.on('server.initialState', ({ id, text, challenge }) => {
+    socket.on("server.initialState", ({ id, text, challenge }) => {
       this.setState({
         id,
         ownerText: text,
@@ -45,45 +46,49 @@ class Sling extends Component {
       });
     });
 
-    socket.on('server.changed', ({ text, email }) => {
-      if (localStorage.getItem('email') === email) {
+    socket.on("server.changed", ({ text, email }) => {
+      if (localStorage.getItem("email") === email) {
         this.setState({ ownerText: text });
       } else {
         this.setState({ challengerText: text });
       }
     });
 
-    socket.on('server.run', ({ stdout, email }) => {
-      const ownerEmail = localStorage.getItem('email');
+    socket.on("server.run", ({ stdout, email }) => {
+      const ownerEmail = localStorage.getItem("email");
       email === ownerEmail ? this.setState({ stdout }) : null;
 
       let stdoutCopy = stdout.slice(0, stdout.length - 1);
       stdoutCopy === ('Solved' || 'Lose') && this.resolveChallenge(stdoutCopy);
     });
 
-    window.addEventListener('resize', this.setEditorSize);
+    window.addEventListener("resize", this.setEditorSize);
   }
 
   submitCode = () => {
     const { socket } = this.props;
     const { ownerText, challenge } = this.state;
-    const email = localStorage.getItem('email');
-    socket.emit('client.run', { text: ownerText, email, challenge_id: challenge.id });
-  }
+    const email = localStorage.getItem("email");
+    socket.emit("client.run", {
+      text: ownerText,
+      email,
+      challenge_id: challenge.id
+    });
+  };
 
   handleChange = throttle((editor, metadata, value) => {
-    const email = localStorage.getItem('email');
-    this.props.socket.emit('client.update', { text: value, email });
-  }, 250)
+    const email = localStorage.getItem("email");
+    this.props.socket.emit("client.update", { text: value, email });
+  }, 250);
 
   setEditorSize = throttle(() => {
     this.editor.setSize(null, `${window.innerHeight - 80}px`);
   }, 100);
 
-  initializeEditor = (editor) => {
+  initializeEditor = editor => {
     this.editor = editor;
     this.setEditorSize();
-  }
+  };
 
   resolveChallenge = async (stdoutCopy) => {
   let endTime = Date.now();
@@ -138,31 +143,41 @@ class Sling extends Component {
             editorDidMount={this.initializeEditor}
             value={this.state.ownerText}
             options={{
-              mode: 'javascript',
+              mode: "javascript",
               lineNumbers: true,
-              theme: 'base16-dark',
+              theme: "base16-dark"
             }}
             onChange={this.handleChange}
-            />
+          />
         </div>
         <div className="stdout-container">
-            {/* {this.state.challenge.title || this.props.challenge.title} */}
-            {/* <hr/> */}
-            {/* <br/> */}
-            Prompt:
-            <br/>
-            {this.state.challenge.content || this.props.challenge.content}
-
-          <Stdout text={this.state.stdout + '\n' + this.state.result} />
-
-          <Button
-            className="run-btn"
-            text="Run Code"
-            backgroundColor="red"
-            color="white"
-            onClick={() => this.submitCode()}
-          />
-
+          <strong>{this.state.challenge.title}</strong>
+          <br />
+          <br />
+          {this.state.challenge.content}
+          <br />
+          <br />
+          <div className="btn-container">
+            <Button
+              className="run-btn"
+              text="Run Code"
+              backgroundColor="red"
+              color="white"
+              onClick={() => this.submitCode()}
+            />
+          </div>
+          <br />
+          <br />
+          {this.state.stdout.slice(0, this.state.stdout.length - 1) ===
+          "solved" ? (
+            <div id="solved">
+              <Stdout text={this.state.stdout} />
+            </div>
+          ) : (
+            <div id="error">
+              <Stdout text={this.state.stdout} />
+            </div>
+          )}
           <DuelChat socket={this.props.socket}/>
         </div>
         <div className="code2-editor-container">
@@ -170,15 +185,15 @@ class Sling extends Component {
             editorDidMount={this.initializeEditor}
             value={this.state.challengerText}
             options={{
-              mode: 'javascript',
+              mode: "javascript",
               lineNumbers: true,
-              theme: 'base16-dark',
-              readOnly: true,
+              theme: "base16-dark",
+              readOnly: true
             }}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

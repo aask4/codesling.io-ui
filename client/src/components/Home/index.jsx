@@ -8,6 +8,7 @@ import AllUsers from "../AllUsers/index.jsx";
 import History from '../History/index.jsx';
 
 import "./LandingPage.css";
+let slingId;
 
 let slingId;
 
@@ -84,7 +85,7 @@ class Home extends Component {
           )}
         </select> */}
         <br />
-        <select onChange={e => this.handleChallengeSelect(e)}>
+        <select id="challenge-select" onChange={e => this.handleChallengeSelect(e)}>
           <option value="select">select a challenge</option>
 
           {this.state.allChallenges.map(challenge => {

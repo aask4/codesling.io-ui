@@ -1,25 +1,36 @@
-.auth-header {
-  width: 100%;
-  padding: 50px 0;
-
-  .logo {
-    width: 300px;
-    display: block;
-    margin: auto;
-  }
-}
-
-.login-form-container,
-.signup-form-container {
-  width: 100%;
+.login-form-container {
+  width: 60%;
+  margin-left: 20%,
 }
 
 .auth-form {
   margin: auto;
   width: 100%;
-  max-width: 400px;
 }
 
-.auth-link {
-  margin-left: 5px;
+input {
+  width: 100%,
+}
+
+#difficulty-select {
+  width: 50%;
+  font-size: 16px;
+  text-align-last: center;
+  padding: 12px 16px;
+  float: right;
+  -webkit-appearance: none;
+}
+
+.code1-editor-container {
+  max-height: 100%;
+  width: 100%;
+  background: palette('white');
+  overflow-y: scroll;
+  cursor: text;
+  grid-area: code1;
+  font-size: 12px;
+}
+
+.CodeMirror {
+  width: 100%;
 }
