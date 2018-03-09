@@ -23,7 +23,7 @@ const Button = ({
   }
 
   return (
-    <div className={`button-container ${className ? className : ''}`}>
+    <span className={`button-container ${className ? className : ''}`}>
       <button 
         id={id}
         className={`${color}-text palette-${backgroundColor} ${!text ? 'no-text' : ''}`}
@@ -40,7 +40,7 @@ const Button = ({
           )
         )}
       </button>
-    </div>
+    </span>
   );
 };
 
