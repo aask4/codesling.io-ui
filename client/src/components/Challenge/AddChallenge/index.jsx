@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import randomstring from "randomstring";
 import CodeMirror from "react-codemirror2";
+import { throttle } from "lodash";
 import Input from "../../globals/forms/Input";
 import Button from "../../globals/Button/";
 import Logo from "../../globals/Logo";
@@ -16,6 +17,12 @@ class AddChallenge extends Component {
     difficulty: null,
     test: ""
   };
+
+  componentDidMount() {
+    this.setState({
+      test: this.testTemplate
+    });
+  }
 
   submitChallenge = async e => {
     e.preventDefault();
@@ -46,64 +53,78 @@ class AddChallenge extends Component {
     this.setState({ [name]: value });
   };
 
-  // testCaseTemplate = () => {
-  //   const test = (func) => {
-  //     function solution(/*paramaters*/) {
-  //       //solution code here
-  //     }
+  setEditorSize = throttle(() => {
+    this.editor.setSize(null, `${window.innerHeight - 3000}px`);
+  }, 100);
 
-  //     let expected = solution(/*arguments*/);
-  //     let actual = func(/*arguments*/);
+  testTemplate = `const func = FILL_ME_IN;
+const expected = func(FILL_ME_IN);
+const actual = FILL_ME_IN;
 
-  //     return expected === actual
-  //       ? console.log("Solved")
-  //       : console.log('Expected ' + expected + ', but got ' + actual);
-  //   };
-  //   test(/*func*/);
-  // };
+//enter one or more tests below
+if (expected === actual) {
+  console.log("solved");
+} else {
+  console.log("expected " + expected + ", but got " + actual);
+}`;
+
+  initializeEditor = editor => {
+    this.editor = editor;
+    this.setEditorSize();
+  };
 
   render() {
     return (
       <div className="login-form-container">
         <Logo className="landing-page-logo" />
         <form className="auth-form">
+          <span>
+            <Button
+              backgroundColor="red"
+              color="white"
+              text="Add Challenge"
+              onClick={e => this.submitChallenge(e)}
+            />
+            <select
+              name="difficulty"
+              type="difficulty"
+              onChange={this.handleChallengeInput}
+            >
+              <option hidden>Select difficulty</option>
+              <option value="1">Junior</option>
+              <option value="2">Senior</option>
+              <option value="3">Nightmare</option>
+            </select>
+          </span>
+          <br />
+          <p>Title</p>
           <Input
             name="title"
             type="title"
-            placeholder={"enter title"}
             onChange={this.handleChallengeInput}
           />
           <br />
-          <br />
+          <p>Description</p>
           <Input
             name="content"
             type="content"
-            placeholder={"enter description"}
             onChange={this.handleChallengeInput}
           />
           <br />
-          <br />
-          <textarea
-            name="test"
-            type="test"
-            onChange={this.handleChallengeInput}
-          />
-          <br />
-          <br />
-          <Input
-            name="difficulty"
-            type="difficulty"
-            placeholder={"enter your difficulty"}
-            onChange={this.handleChallengeInput}
-          />
-          <br />
-          <br />
-          <Button
-            backgroundColor="red"
-            color="white"
-            text="Add Challenge"
-            onClick={e => this.submitChallenge(e)}
-          />
+          <p>Test Cases</p>
+          <div className="code1-editor-container">
+            <CodeMirror
+              editorDidMount={this.initializeEditor}
+              value={this.state.test}
+              options={{
+                mode: "javascript",
+                lineNumbers: true
+              }}
+              onChange={(editor, data, value) =>
+                this.handleChallengeInput({ target: { name: "test", value } })
+              }
+            />
+          </div>
         </form>
       </div>
     );
