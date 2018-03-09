@@ -72,7 +72,6 @@ class Home extends Component {
     const {data} = await axios.post('http://localhost:3396/api/openDuels',
       {
         challenge_id: JSON.parse(this.state.selectedChallenge).id,
-        challenger_id: localStorage.getItem('id'),
         sling_id: slingId
       });
     this.props.history.push({
