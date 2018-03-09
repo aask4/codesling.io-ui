@@ -46,7 +46,7 @@ class Home extends Component {
       this.props.history.push({
         pathname: `/${this.state.selectedDuel.sling_id}`,
         state: {
-          challenge: this.state.selectedDuel,
+          challenge: JSON.stringify(this.state.selectedDuel),
           user_id: localStorage.getItem('id'),
           opponent: true
         }
@@ -77,7 +77,7 @@ class Home extends Component {
     this.props.history.push({
         pathname: `/${data.sling_id}`,
         state: {
-          challenge: JSON.parse(this.state.selectedChallenge),
+          challenge: this.state.selectedChallenge,
           user_id: localStorage.getItem('id'),
         }
       });
