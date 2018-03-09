@@ -24,6 +24,8 @@
   "homepage": "https://github.com/codesling/codesling.io-ui#readme",
   "dependencies": {
     "lodash": "^4.17.4",
+    "react-transition-group": "^2.2.1",
+    "reactstrap": "^4.8.0",
     "yarn": "^1.5.1"
   }
 }
