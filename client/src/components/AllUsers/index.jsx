@@ -31,6 +31,10 @@ class AllUsers extends Component {
   }
   async fetchAllUsers(){
     const { data } = await axios.get(`http://localhost:3396/api/users/fetchAllUsers`)
+    console.log('this is the data', data)
+    for(let i = 0; i < data.rows.length; i ++) {
+
+    }
     this.setState({ all_users: data.rows });
   }
   async addFriend(e) {

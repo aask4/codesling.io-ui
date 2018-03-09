@@ -111,7 +111,7 @@ class Home extends Component {
     return (<div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
-        <Route path='/' component={Logout}/>
+        <Route path='/home' component={Logout}/>
         <div>
           <button type="button" onClick={() => this.goToHistory()}>Check Out Challenge History</button>
         </div>
