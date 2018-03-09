@@ -12,7 +12,7 @@ input {
   width: 100%,
 }
 
-select {
+#difficulty-select {
   width: 50%;
   font-size: 16px;
   text-align-last: center;

@@ -12,6 +12,15 @@ input {
   width: 100%,
 }
 
+#difficulty-select {
+  width: 50%;
+  font-size: 16px;
+  text-align-last: center;
+  padding: 12px 16px;
+  float: right;
+  -webkit-appearance: none;
+}
+
 .code1-editor-container {
   max-height: 100%;
   width: 100%;
@@ -19,6 +28,7 @@ input {
   overflow-y: scroll;
   cursor: text;
   grid-area: code1;
+  font-size: 12px;
 }
 
 .CodeMirror {

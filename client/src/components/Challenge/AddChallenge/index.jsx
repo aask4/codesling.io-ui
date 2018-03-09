@@ -88,6 +88,7 @@ if (expected === actual) {
             <select
               name="difficulty"
               type="difficulty"
+              id="difficulty-select"
               onChange={this.handleChallengeInput}
             >
               <option hidden>Select difficulty</option>
