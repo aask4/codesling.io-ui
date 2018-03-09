@@ -11,7 +11,9 @@ import History from '../History/index.jsx';
 import Logout from '../Auth/Logout.jsx';
 
 import "./LandingPage.css";
-let slingId
+
+let slingId;
+
 
 class Home extends Component {
   state = {
@@ -72,7 +74,6 @@ class Home extends Component {
     const {data} = await axios.post('http://localhost:3396/api/openDuels',
       {
         challenge_id: JSON.parse(this.state.selectedChallenge).id,
-        challenger_id: localStorage.getItem('id'),
         sling_id: slingId
       });
     this.props.history.push({
@@ -102,7 +103,7 @@ class Home extends Component {
     console.log('OpenDuels - open duels returned from server ', data);
     data && this.addDuels(data);
   }
-    
+
   goToHistory(){
     this.props.history.push('/history')
   }
