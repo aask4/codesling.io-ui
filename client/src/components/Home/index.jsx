@@ -6,12 +6,14 @@ import Button from "../globals/Button";
 import Logo from "../globals/Logo";
 import AllUsers from "../AllUsers/index.jsx";
 
+let slingId;
 import "./LandingPage.css";
 
 class Home extends Component {
   state = {
     allChallenges: [],
-    selectedChallenge: {}
+    selectedChallenge: {},
+    search: ''
   };
 
   async componentDidMount() {
@@ -65,7 +67,6 @@ class Home extends Component {
         <Logo className="landing-page-logo" />
         <button style={{float: 'right'}} onClick={()=>this.logout()}>log out</button>
         <br />
-
         <div>
           <AllUsers />
         </div>
@@ -88,7 +89,7 @@ class Home extends Component {
 
           {this.state.allChallenges.map(challenge => {
             return (
-              <option value={JSON.stringify(challenge)}>
+              <option key={challenge.id} value={JSON.stringify(challenge)}>
                 {challenge.title}
               </option>
             );
@@ -106,7 +107,7 @@ class Home extends Component {
           onClick={() => this.handleDuelClick()}
         />
         <br />
-        <Button
+        <Button 
           backgroundColor="red"
           color="white"
           text="See All Challenges"
