@@ -7,6 +7,7 @@ import { throttle } from 'lodash';
 import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
+import WaitingPage from '../WaitingPage/index.jsx';
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -24,6 +25,7 @@ class Sling extends Component {
       challenge: '',
       stdout: '',
       result: '',
+      waiting: true,
     }
   }
 
@@ -39,7 +41,7 @@ class Sling extends Component {
         id,
         ownerText: text,
         challengerText: text,
-        challenge
+        challenge,
       });
     });
 
@@ -82,7 +84,8 @@ class Sling extends Component {
 
   render() {
     const { socket } = this.props;
-    return (
+    return(this.state.waiting) ?
+    (<WaitingPage />) : (
       <div className="sling-container">
         <EditorHeader />
         <div className="code1-editor-container">
@@ -128,7 +131,7 @@ class Sling extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

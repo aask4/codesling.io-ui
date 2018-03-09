@@ -32,15 +32,29 @@ class Home extends Component {
     slingId = `${randomstring.generate()}`;
   }
 
-  handleJoinDuelClick = () => {
-    console.log('##########', this.state.selectedDuel[0])
-    this.props.history.push({
-      pathname: `/${this.state.selectedDuel[0].sling_id}`,
-      state: {
-        challenge: this.state.selectedDuel[0]
-      }
-    });
-  }
+  handleJoinDuelClick = async () => {
+    const curr_user = await localStorage.getItem('id');
+    if ( curr_user != this.state.selectedDuel.challenger_id) {
+      // const openDuel = await axios.put('http://localhost:3396/api/openDuels',
+      // {
+      //   data: {
+      //     opponent_id: localStorage.getItem('id'),
+      //     duel_id: this.state.selectedDuel.duel_id
+      //   }
+      // })
+      this.props.history.push({
+        pathname: `/${this.state.selectedDuel.sling_id}`,
+        state: {
+          challenge: JSON.stringify(this.state.selectedDuel),
+          user_id: localStorage.getItem('id'),
+          opponent: true
+        }
+      });
+      await axios.delete('http://localhost:3396/api/openDuels',
+        {data: {duel_id: this.state.selectedDuel.duel_id}
+        });
+    }
+  };
 
   handleAddChallengeClick = () => {
     this.props.history.push("/addChallenge");
@@ -60,12 +74,17 @@ class Home extends Component {
         challenger_id: localStorage.getItem('id'),
         sling_id: slingId
       });
-    this.fetchOpenDuels();
+    this.props.history.push({
+        pathname: `/${data.sling_id}`,
+        state: {
+          challenge: this.state.selectedChallenge,
+          user_id: localStorage.getItem('id'),
+        }
+      });
   }
 
   handleDuelSelect = ({value}) => {
-    console.log('VALUE IS VALUE ', value);
-    this.setState({selectedDuel: value});
+    this.setState({selectedDuel: JSON.parse(value)});
   }
 
   handleSeeAllClick = () => {
@@ -86,7 +105,6 @@ class Home extends Component {
     return <div className="landing-page-container">
         <Logo className="landing-page-logo" />
         <br />
-
         <div>
           <AllUsers />
         </div>
@@ -119,12 +137,7 @@ class Home extends Component {
         <br />
         <Button backgroundColor="red" color="white" text="Initiate Duel" onClick={() => this.handleIinitateDuelClick()} />
         <br />
-        <OpenDuels
-          handleDuelSelect={this.handleDuelSelect.bind(this)}
-          addDuels={this.addDuels.bind(this)}
-          openDuels={this.state.openDuels}
-          fetchOpenDuels={this.fetchOpenDuels.bind(this)}
-        />
+        <OpenDuels handleDuelSelect={this.handleDuelSelect.bind(this)} addDuels={this.addDuels.bind(this)} openDuels={this.state.openDuels} fetchOpenDuels={this.fetchOpenDuels.bind(this)} />
         <br />
         <Button backgroundColor="red" color="white" text="Join Duel" onClick={() => this.handleJoinDuelClick()} />
         <br />
