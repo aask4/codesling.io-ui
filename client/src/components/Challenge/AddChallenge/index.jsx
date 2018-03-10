@@ -57,11 +57,10 @@ class AddChallenge extends Component {
     this.editor.setSize(null, `${window.innerHeight - 3000}px`);
   }, 100);
 
-  testTemplate = `const func = FILL_ME_IN;
-const expected = FILL_ME_IN;
-const actual = func(FILL_ME_IN);
+  testTemplate = `//write one or more tests below
+var expected = FILL_ME_IN;
+var actual = func(FILL_ME_IN);
 
-//enter one or more tests below
 if (expected === actual) {
   console.log("solved");
 } else {
