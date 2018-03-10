@@ -25,7 +25,7 @@ class OpenDuels extends Component {
         <select onChange={this.onChange}>
           <option>Choose a Duel</option>
           {this.props.openDuels.map(duel => {
-            return <option value={JSON.stringify(duel)}>
+            return <option key={duel.duel_id} value={JSON.stringify(duel)}>
                 {duel.title}-{duel.difficulty}
               </option>;
           })}

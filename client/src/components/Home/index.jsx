@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import randomstring from "randomstring";
 import axios from "axios";
 import { Route } from 'react-router-dom'
+import io from "socket.io-client/dist/socket.io.js";
 
 import Button from "../globals/Button";
 import Logo from "../globals/Logo";
@@ -27,7 +28,19 @@ class Home extends Component {
     const { data } = await axios.get(
       `http://localhost:3396/api/usersChallenges/${id}`
     );
+    let self = this;
     this.setState({ allChallenges: data.rows });
+    
+    this.socket = io("http://localhost:4155",{
+      query: {
+        roomId: 'homecomponentupdateopendules',
+        title: 'opendules'
+      }
+    })
+    this.socket.on('updateOpenDuels', function(message) {
+      self.fetchOpenDuels();
+    })
+
   }
 
   randomSlingId = () => {
@@ -65,18 +78,19 @@ class Home extends Component {
   handleIinitateDuelClick = async () => {
     this.randomSlingId();
     const {data} = await axios.post('http://localhost:3396/api/openDuels',
-      {
-        challenge_id: JSON.parse(this.state.selectedChallenge).id,
-        sling_id: slingId
-      });
+    {
+      challenge_id: JSON.parse(this.state.selectedChallenge).id,
+      sling_id: slingId
+    });
     this.props.history.push({
-        pathname: `/${data.sling_id}`,
-        state: {
-          challenge: this.state.selectedChallenge,
-          user_id: localStorage.getItem('id'),
-        },
-        history: this.props.history
-      });
+      pathname: `/${data.sling_id}`,
+      state: {
+        challenge: this.state.selectedChallenge,
+        user_id: localStorage.getItem('id'),
+      },
+      history: this.props.history
+    });
+    this.socket.emit('addOpenDuels')
   }
 
   handleDuelSelect = ({value}) => {
@@ -94,8 +108,8 @@ class Home extends Component {
 
   fetchOpenDuels = async () => {
     const {data} = await axios.get('http://localhost:3396/api/openDuels');
-    console.log('OpenDuels - open duels returned from server ', data);
     data && this.addDuels(data);
+    return data;
   }
 
 
@@ -133,7 +147,7 @@ class Home extends Component {
           <option value="select">select a challenge</option>
 
           {this.state.allChallenges.map(challenge => {
-            return <option value={JSON.stringify(challenge)}>
+            return <option key={challenge.id} value={JSON.stringify(challenge)}>
                 {challenge.title}
               </option>;
           })}

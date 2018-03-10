@@ -13,7 +13,6 @@ class AllUsers extends Component {
   }
 
   async componentDidMount(){
-    console.log('inside of component..')
     this.fetchAllUsers();
     this.fetchFriends();
   }
@@ -25,7 +24,6 @@ class AllUsers extends Component {
     let user_id = Number(window.localStorage.getItem('id'))
     try {
       let { data } = await axios.get(`http://localhost:3396/api/friends/fetchAllFriends/${user_id}`)
-      console.log('this is all friends', data)
       await this.setState({friends: data})
     }catch(e){
       console.log('this is the err fetching all friends', e)
