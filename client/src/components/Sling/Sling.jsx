@@ -63,17 +63,23 @@ class Sling extends Component {
 
     socket.on("server.run", ({ stdout, email }) => {
       const ownerEmail = localStorage.getItem("email");
-      email === ownerEmail ? this.setState({ stdout }) : this.setState({stdout: 'lose'});
+      let stdoutCopy = stdout.slice(0, stdout.length - 1);
+      console.log(stdoutCopy);
+      email === ownerEmail ? 
+        this.setState({ stdout: stdoutCopy }) 
+        : 
+        stdoutCopy === 'solved' ? this.setState({stdout: 'You Lose'}) : null;
 
-      let stdoutCopy = this.state.stdout.slice(0, stdout.length - 1);
-      stdoutCopy === 'solved' && this.resolveChallenge(stdoutCopy)
-      stdoutCopy === 'lose' && this.resolveChallenge(stdoutCopy);
+      this.state.stdout === 'solved' && this.resolveChallenge(this.state.stdout);
+      this.state.stdout === 'You Lose' && this.resolveChallenge(this.state.stdout);
+
     });
 
     window.addEventListener("resize", this.setEditorSize);
   }
 
   submitCode = () => {
+    this.showState();
     const { socket } = this.props;
     const { ownerText, challenge } = this.state;
     const email = localStorage.getItem("email");
@@ -83,6 +89,11 @@ class Sling extends Component {
       challenge_id: challenge.id
     });
   };
+
+  showState() {
+    console.log(this.state);
+    console.log(this.props);
+  }
 
   handleChange = throttle((editor, metadata, value) => {
     const email = localStorage.getItem("email");
@@ -118,7 +129,7 @@ class Sling extends Component {
   stdoutCopy === 'solved' ? outcome = 1 : outcome = 0; //Win-Lose
 
   let challenger_id;
-  localStorage.id === 1 ? challenger_id = 2 : challenger_id = 1;
+  localStorage.id === '1' ? challenger_id = 2 : challenger_id = 1;
 
   let result = {
     outcome: outcome,
@@ -182,7 +193,7 @@ class Sling extends Component {
           </div>
           <br />
           <br />
-          {this.state.stdout.slice(0, this.state.stdout.length - 1) ===
+          {this.state.stdout ===
           "solved" ? (
             <div id="solved">
               <Stdout text={this.state.stdout} />
