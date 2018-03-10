@@ -4,7 +4,6 @@ import axios from 'axios'
 class FriendListEntry extends React.Component {
   constructor(props) {
     super(props)
-    console.log('this should be each friend', props.friend)
   }
   async componentDidMount () {
 
