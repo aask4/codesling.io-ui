@@ -86,7 +86,8 @@ class Sling extends Component {
     socket.emit("client.run", {
       text: ownerText,
       email,
-      challenge_id: challenge.id
+      challenge_id: challenge.id,
+      challenge_title: challenge.title,
     });
   };
 
